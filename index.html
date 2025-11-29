@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Trabalhos Automático</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        select, input, button { width: 100%; padding: 10px; margin: 10px 0; }
+        button { background: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background: #45a049; }
+        #resultado { margin-top: 20px; padding: 15px; background: #eef; border-radius: 8px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerador Automático de Trabalhos</h1>
+
+        <label>Nível de Ensino:</label>
+        <select id="nivel">
+            <option value="fundamental">Ensino Fundamental</option>
+            <option value="medio">Ensino Médio</option>
+        </select>
+
+        <label>Tema do Trabalho:</label>
+        <input type="text" id="tema" placeholder="Ex: Segunda Guerra Mundial">
+
+        <button onclick="gerarTrabalho()">Gerar Trabalho</button>
+
+        <div id="resultado"></div>
+    </div>
+
+<script>
+function gerarTrabalho() {
+    const tema = document.getElementById("tema").value.trim();
+    const nivel = document.getElementById("nivel").value;
+    const resultado = document.getElementById("resultado");
+
+    if (tema === "") {
+        resultado.textContent = "Por favor, escreva um tema válido.";
+        return;
+    }
+
+    let explicacao = gerarExplicacaoIA(tema, nivel);
+
+    resultado.textContent = explicacao;
+}
+
+function gerarExplicacaoIA(tema, nivel) {
+    tema = tema.toLowerCase();
+
+    // Explicações automáticas pré-programadas
+    const banco = {
+        "segunda guerra mundial": {
+            fundamental:
+                "A Segunda Guerra Mundial aconteceu entre 1939 e 1945. Foi um conflito muito grande que envolveu vários países do mundo. Os principais grupos foram os Aliados, como Estados Unidos, Reino Unido e União Soviética, e o Eixo, formado por Alemanha, Itália e Japão. A guerra começou quando a Alemanha, liderada por Adolf Hitler, invadiu a Polônia. O conflito terminou em 1945, com a vitória dos Aliados. Foi um período marcado por batalhas, bombas, destruição e também pelo Holocausto, que foi um crime muito grave contra vários povos, principalmente os judeus.",
+            medio:
+                "A Segunda Guerra Mundial (1939–1945) foi o maior conflito armado da história. Iniciou-se com a invasão da Polônia pela Alemanha Nazista, liderada por Adolf Hitler. O conflito envolveu duas grandes alianças: os Aliados — Reino Unido, França, União Soviética, Estados Unidos — e o Eixo — Alemanha, Itália e Japão. O período foi marcado por avanços tecnológicos militares, bombardeios, políticas totalitárias e genocídios, como o Holocausto. O fim da guerra ocorreu com a rendição alemã em maio de 1945 e a rendição japonesa em setembro, após os ataques atômicos a Hiroshima e Nagasaki."
+        }
+    };
+
+    if (banco[tema]) {
+        return banco[tema][nivel];
+    }
+
+    return "Ainda não tenho explicação automática para este tema, mas estou sendo atualizado!";
+}
+</script>
+
+</body>
+</html>
