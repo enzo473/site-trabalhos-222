@@ -158,3 +158,177 @@ function generateSuperiorText(tema){
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gerador Profissional de Trabalhos</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#07060a;
+      --panel:#0f1114;
+      --muted:#98a1ad;
+      --accent:#6b5cff;
+      --radius:12px;
+      --card-pad:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter;
+      background:var(--bg);
+      color:white;
+    }
+
+    header{
+      padding:20px;
+      background:#0f1114;
+      border-bottom:1px solid rgba(255,255,255,0.07);
+      text-align:center;
+    }
+
+    main{
+      max-width:1200px;
+      margin:28px auto;
+      display:grid;
+      grid-template-columns:340px 1fr;
+      gap:20px;
+      padding:0 20px;
+    }
+
+    .card{
+      background:var(--panel);
+      padding:20px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+
+    label{
+      font-size:14px;
+      color:var(--muted);
+      display:block;
+      margin-bottom:6px;
+    }
+
+    input, select, textarea{
+      width:100%;
+      padding:10px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:#0c0d10;
+      color:white;
+      margin-bottom:15px;
+    }
+
+    button{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      background:var(--accent);
+      font-size:16px;
+      font-weight:600;
+      cursor:pointer;
+      color:white;
+      margin-top:8px;
+    }
+
+    #preview{
+      background:#111218;
+      padding:20px;
+      border-radius:12px;
+      min-height:450px;
+      overflow:auto;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Gerador Profissional de Trabalhos</h1>
+</header>
+
+<main>
+  <!-- Painel da esquerda -->
+  <div class="card">
+
+    <label>Tema do Trabalho</label>
+    <input id="tema" placeholder="Ex: Segunda Guerra Mundial">
+
+    <label>Série / Nível Escolar</label>
+    <select id="nivel">
+      <option>Ensino Fundamental</option>
+      <option>Ensino Médio</option>
+      <option>Ensino Superior</option>
+    </select>
+
+    <label>Nível da IA</label>
+    <select id="iaNivel">
+      <option value="forte">Forte</option>
+      <option value="media">Média</option>
+      <option value="leve">Leve</option>
+    </select>
+
+    <button id="gerar">Gerar Trabalho</button>
+  </div>
+
+  <!-- Pré-visualização -->
+  <div id="preview" class="card"></div>
+</main>
+
+<script>
+function gerarConteudoIA(tema, nivel, profundidade){
+  
+  let explicacaoNivel = "";
+  if(nivel === "Ensino Fundamental")
+    explicacaoNivel = "Explicação simples, com linguagem clara e exemplos fáceis.";
+  else if(nivel === "Ensino Médio")
+    explicacaoNivel = "Texto objetivo, com conceitos intermediários e boa explicação.";
+  else
+    explicacaoNivel = "Conteúdo profundo, com explicações técnicas e linguagem formal.";
+
+  let complex = profundidade === "forte" ? 3 : profundidade === "media" ? 2 : 1;
+
+  return `
+    <h1 style="text-align:center">${tema}</h1>
+
+    <h2>Introdução</h2>
+    <p>${explicacaoNivel} Aqui será apresentada uma introdução ao tema <b>${tema}</b>, mostrando sua importância e contexto geral.</p>
+
+    <h2>Desenvolvimento</h2>
+    <p>A seguir, será explicado detalhadamente sobre <b>${tema}</b>. A IA está trabalhando no nível ${complex}, garantindo profundidade adequada ao nível escolar.</p>
+
+    <p>• Explicação principal sobre o tema.<br>
+    • Conceitos importantes.<br>
+    • Detalhes históricos, científicos ou sociais conforme necessário.<br>
+    • Relações importantes para compreensão do assunto.</p>
+
+    <h2>Conclusão</h2>
+    <p>A conclusão retoma os pontos principais sobre <b>${tema}</b>, reforçando o aprendizado e apresentando um fechamento claro e objetivo.</p>
+  `;
+}
+
+document.getElementById("gerar").addEventListener("click", () => {
+  const tema = document.getElementById("tema").value.trim();
+  const nivel = document.getElementById("nivel").value;
+  const ia = document.getElementById("iaNivel").value;
+
+  if(tema.length < 3){
+    alert("Digite um tema válido.");
+    return;
+  }
+
+  const texto = gerarConteudoIA(tema, nivel, ia);
+  document.getElementById("preview").innerHTML = texto;
+});
+</script>
+
+</body>
+</html>
+
