@@ -66,6 +66,94 @@ function gerarExplicacaoIA(tema, nivel) {
 
     return "Ainda não tenho explicação automática para este tema, mas estou sendo atualizado!";
 }
+
+
+// INÍCIO DAS FUNÇÕES NOVAS
+function gerarExplicacaoTema(tema){
+  tema = tema.toLowerCase();
+
+  const banco = {
+    "segunda guerra mundial": {
+      introducao:
+        "A Segunda Guerra Mundial foi um conflito global que ocorreu entre 1939 e 1945, envolvendo as maiores potências do mundo. Foi marcada por batalhas em vários continentes, avanços tecnológicos bélicos e grande impacto social e econômico.",
+      topicos: [
+        "Causas da Segunda Guerra Mundial, incluindo o Tratado de Versalhes, ascensão do nazismo e expansão territorial.",
+        "Principais países envolvidos, como Alemanha, Itália, Japão, Reino Unido, União Soviética e Estados Unidos.",
+        "Consequências do conflito, como a criação da ONU, início da Guerra Fria e mudanças geopolíticas globais."
+      ],
+      conclusao:
+        "A Segunda Guerra Mundial mudou profundamente o mundo ao redefinir fronteiras, fortalecer organismos internacionais e evidenciar a necessidade de cooperação global."
+    },
+
+    "fotossíntese": {
+      introducao:
+        "A fotossíntese é o processo pelo qual plantas, algas e algumas bactérias produzem seu próprio alimento utilizando luz solar. É essencial para o equilíbrio da vida na Terra.",
+      topicos: [
+        "Como funciona o processo, incluindo clorofila, absorção de luz e produção de glicose.",
+        "Diferença entre fase clara e fase escura da fotossíntese.",
+        "Importância ecológica para a produção de oxigênio e manutenção da cadeia alimentar."
+      ],
+      conclusao:
+        "A fotossíntese é vital para a vida no planeta, permitindo que seres vivos tenham oxigênio e garantindo o equilíbrio dos ecossistemas."
+    },
+
+    "água": {
+      introducao:
+        "A água é um recurso natural fundamental para a vida e para o funcionamento dos ecossistemas. Está presente na maior parte do planeta.",
+      topicos: [
+        "Ciclo da água e seus processos: evaporação, condensação e precipitação.",
+        "Importância da água para seres vivos e atividades humanas.",
+        "Problemas atuais como poluição, desperdício e crise hídrica."
+      ],
+      conclusao:
+        "A preservação da água é essencial para garantir qualidade de vida e manter o equilíbrio ambiental."
+    }
+  };
+
+  if (banco[tema]) return banco[tema];
+
+  return {
+    introducao: `O tema ${tema} é importante para entender fenômenos presentes no cotidiano, na sociedade ou na ciência. Neste trabalho vamos explicar seus aspectos principais.`,
+    topicos: [
+      `O que é ${tema} e seus principais conceitos.`,
+      `Importância de ${tema} e suas aplicações práticas.`,
+      `Impactos e relevância de ${tema} no mundo atual.`
+    ],
+    conclusao: `Conclui-se que ${tema} possui grande importância e influencia diversos aspectos da vida moderna.`
+  };
+}
+
+function generateFundamentalText(tema){
+  const x = gerarExplicacaoTema(tema);
+  return {
+    capa: `<h2 style='text-align:center'>${tema}</h2><p style='text-align:center'>Trabalho - Ensino Fundamental</p>`,
+    introducao: x.introducao,
+    topicos: x.topicos,
+    conclusao: x.conclusao
+  };
+}
+
+function generateMedioText(tema){
+  const x = gerarExplicacaoTema(tema);
+  return {
+    capa: `<h2 style='text-align:center'>${tema}</h2><p style='text-align:center'>Trabalho - Ensino Médio</p>`,
+    introducao: x.introducao,
+    topicos: x.topicos,
+    conclusao: x.conclusao
+  };
+}
+
+function generateSuperiorText(tema){
+  const x = gerarExplicacaoTema(tema);
+  return {
+    capa: `<h2 style='text-align:center'>${tema}</h2><p style='text-align:center'>Trabalho Acadêmico - Ensino Superior</p>`,
+    introducao: x.introducao,
+    topicos: x.topicos,
+    conclusao: x.conclusao
+  };
+}
+// FIM DAS FUNÇÕES NOVAS
+
 </script>
 
 </body>
