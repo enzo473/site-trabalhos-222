@@ -1,334 +1,204 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Trabalhos Automático</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; }
-        .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        select, input, button { width: 100%; padding: 10px; margin: 10px 0; }
-        button { background: #4CAF50; color: white; border: none; cursor: pointer; }
-        button:hover { background: #45a049; }
-        #resultado { margin-top: 20px; padding: 15px; background: #eef; border-radius: 8px; white-space: pre-wrap; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Gerador Automático de Trabalhos</h1>
-
-        <label>Nível de Ensino:</label>
-        <select id="nivel">
-            <option value="fundamental">Ensino Fundamental</option>
-            <option value="medio">Ensino Médio</option>
-        </select>
-
-        <label>Tema do Trabalho:</label>
-        <input type="text" id="tema" placeholder="Ex: Segunda Guerra Mundial">
-
-        <button onclick="gerarTrabalho()">Gerar Trabalho</button>
-
-        <div id="resultado"></div>
-    </div>
-
-<script>
-function gerarTrabalho() {
-    const tema = document.getElementById("tema").value.trim();
-    const nivel = document.getElementById("nivel").value;
-    const resultado = document.getElementById("resultado");
-
-    if (tema === "") {
-        resultado.textContent = "Por favor, escreva um tema válido.";
-        return;
-    }
-
-    let explicacao = gerarExplicacaoIA(tema, nivel);
-
-    resultado.textContent = explicacao;
-}
-
-function gerarExplicacaoIA(tema, nivel) {
-    tema = tema.toLowerCase();
-
-    // Explicações automáticas pré-programadas
-    const banco = {
-        "segunda guerra mundial": {
-            fundamental:
-                "A Segunda Guerra Mundial aconteceu entre 1939 e 1945. Foi um conflito muito grande que envolveu vários países do mundo. Os principais grupos foram os Aliados, como Estados Unidos, Reino Unido e União Soviética, e o Eixo, formado por Alemanha, Itália e Japão. A guerra começou quando a Alemanha, liderada por Adolf Hitler, invadiu a Polônia. O conflito terminou em 1945, com a vitória dos Aliados. Foi um período marcado por batalhas, bombas, destruição e também pelo Holocausto, que foi um crime muito grave contra vários povos, principalmente os judeus.",
-            medio:
-                "A Segunda Guerra Mundial (1939–1945) foi o maior conflito armado da história. Iniciou-se com a invasão da Polônia pela Alemanha Nazista, liderada por Adolf Hitler. O conflito envolveu duas grandes alianças: os Aliados — Reino Unido, França, União Soviética, Estados Unidos — e o Eixo — Alemanha, Itália e Japão. O período foi marcado por avanços tecnológicos militares, bombardeios, políticas totalitárias e genocídios, como o Holocausto. O fim da guerra ocorreu com a rendição alemã em maio de 1945 e a rendição japonesa em setembro, após os ataques atômicos a Hiroshima e Nagasaki."
-        }
-    };
-
-    if (banco[tema]) {
-        return banco[tema][nivel];
-    }
-
-    return "Ainda não tenho explicação automática para este tema, mas estou sendo atualizado!";
-}
-
-
-// INÍCIO DAS FUNÇÕES NOVAS
-function gerarExplicacaoTema(tema){
-  tema = tema.toLowerCase();
-
-  const banco = {
-    "segunda guerra mundial": {
-      introducao:
-        "A Segunda Guerra Mundial foi um conflito global que ocorreu entre 1939 e 1945, envolvendo as maiores potências do mundo. Foi marcada por batalhas em vários continentes, avanços tecnológicos bélicos e grande impacto social e econômico.",
-      topicos: [
-        "Causas da Segunda Guerra Mundial, incluindo o Tratado de Versalhes, ascensão do nazismo e expansão territorial.",
-        "Principais países envolvidos, como Alemanha, Itália, Japão, Reino Unido, União Soviética e Estados Unidos.",
-        "Consequências do conflito, como a criação da ONU, início da Guerra Fria e mudanças geopolíticas globais."
-      ],
-      conclusao:
-        "A Segunda Guerra Mundial mudou profundamente o mundo ao redefinir fronteiras, fortalecer organismos internacionais e evidenciar a necessidade de cooperação global."
-    },
-
-    "fotossíntese": {
-      introducao:
-        "A fotossíntese é o processo pelo qual plantas, algas e algumas bactérias produzem seu próprio alimento utilizando luz solar. É essencial para o equilíbrio da vida na Terra.",
-      topicos: [
-        "Como funciona o processo, incluindo clorofila, absorção de luz e produção de glicose.",
-        "Diferença entre fase clara e fase escura da fotossíntese.",
-        "Importância ecológica para a produção de oxigênio e manutenção da cadeia alimentar."
-      ],
-      conclusao:
-        "A fotossíntese é vital para a vida no planeta, permitindo que seres vivos tenham oxigênio e garantindo o equilíbrio dos ecossistemas."
-    },
-
-    "água": {
-      introducao:
-        "A água é um recurso natural fundamental para a vida e para o funcionamento dos ecossistemas. Está presente na maior parte do planeta.",
-      topicos: [
-        "Ciclo da água e seus processos: evaporação, condensação e precipitação.",
-        "Importância da água para seres vivos e atividades humanas.",
-        "Problemas atuais como poluição, desperdício e crise hídrica."
-      ],
-      conclusao:
-        "A preservação da água é essencial para garantir qualidade de vida e manter o equilíbrio ambiental."
-    }
-  };
-
-  if (banco[tema]) return banco[tema];
-
-  return {
-    introducao: `O tema ${tema} é importante para entender fenômenos presentes no cotidiano, na sociedade ou na ciência. Neste trabalho vamos explicar seus aspectos principais.`,
-    topicos: [
-      `O que é ${tema} e seus principais conceitos.`,
-      `Importância de ${tema} e suas aplicações práticas.`,
-      `Impactos e relevância de ${tema} no mundo atual.`
-    ],
-    conclusao: `Conclui-se que ${tema} possui grande importância e influencia diversos aspectos da vida moderna.`
-  };
-}
-
-function generateFundamentalText(tema){
-  const x = gerarExplicacaoTema(tema);
-  return {
-    capa: `<h2 style='text-align:center'>${tema}</h2><p style='text-align:center'>Trabalho - Ensino Fundamental</p>`,
-    introducao: x.introducao,
-    topicos: x.topicos,
-    conclusao: x.conclusao
-  };
-}
-
-function generateMedioText(tema){
-  const x = gerarExplicacaoTema(tema);
-  return {
-    capa: `<h2 style='text-align:center'>${tema}</h2><p style='text-align:center'>Trabalho - Ensino Médio</p>`,
-    introducao: x.introducao,
-    topicos: x.topicos,
-    conclusao: x.conclusao
-  };
-}
-
-function generateSuperiorText(tema){
-  const x = gerarExplicacaoTema(tema);
-  return {
-    capa: `<h2 style='text-align:center'>${tema}</h2><p style='text-align:center'>Trabalho Acadêmico - Ensino Superior</p>`,
-    introducao: x.introducao,
-    topicos: x.topicos,
-    conclusao: x.conclusao
-  };
-}
-// FIM DAS FUNÇÕES NOVAS
-
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Gerador Profissional de Trabalhos</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gerador Inteligente de Trabalhos — Ultimate</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
   <style>
     :root{
-      --bg:#07060a;
-      --panel:#0f1114;
-      --muted:#98a1ad;
-      --accent:#6b5cff;
-      --radius:12px;
-      --card-pad:18px;
+      --bg:#0c0b10;
+      --panel:#14131b;
+      --panel-soft:#1b1a24;
+      --text:#f1f3f8;
+      --muted:#9aa0ad;
+      --accent:#7b5bfa;
+      --accent2:#2de0b7;
+      --radius:16px;
+      --shadow:0 8px 28px rgba(0,0,0,0.35);
     }
-    *{box-sizing:border-box}
+    *{box-sizing:border-box;margin:0;padding:0}
     body{
-      margin:0;
-      font-family:Inter;
+      font-family:Inter,Arial;
       background:var(--bg);
-      color:white;
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
     }
 
     header{
-      padding:20px;
-      background:#0f1114;
-      border-bottom:1px solid rgba(255,255,255,0.07);
-      text-align:center;
+      padding:22px 30px;
+      background:var(--panel);
+      box-shadow:var(--shadow);
+      display:flex;
+      align-items:center;
+      gap:16px;
     }
+    .logo{
+      width:55px;height:55px;border-radius:14px;
+      background:linear-gradient(135deg,var(--accent),#9e85ff);
+      display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;
+      color:white;
+    }
+    h1{font-size:22px;margin:0}
+    .subtitle{font-size:14px;color:var(--muted)}
 
-    main{
-      max-width:1200px;
-      margin:28px auto;
-      display:grid;
-      grid-template-columns:340px 1fr;
-      gap:20px;
-      padding:0 20px;
-    }
+    main{max-width:1350px;margin:32px auto;padding:0 24px;display:grid;grid-template-columns:380px 1fr;gap:26px}
 
     .card{
-      background:var(--panel);
+      background:var(--panel-soft);
+      border-radius:var(--radius);
       padding:20px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,0.05);
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,0.04);
     }
 
-    label{
+    label{font-size:14px;color:var(--muted);margin-bottom:6px;display:block}
+    input,select,textarea{
+      width:100%;padding:11px;border-radius:10px;
+      background:#0f0e14;color:var(--text);
+      border:1px solid rgba(255,255,255,0.06);
+      margin-bottom:12px;
       font-size:14px;
-      color:var(--muted);
-      display:block;
-      margin-bottom:6px;
     }
+    textarea{min-height:110px}
 
-    input, select, textarea{
-      width:100%;
-      padding:10px;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,0.08);
-      background:#0c0d10;
-      color:white;
-      margin-bottom:15px;
+    .btn{
+      padding:12px 18px;border:none;border-radius:10px;
+      cursor:pointer;font-weight:600;font-size:14px;
+      background:var(--accent);color:white;
+      transition:0.2s;
     }
+    .btn:hover{opacity:0.9}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.12)}
 
-    button{
-      width:100%;
-      padding:12px;
-      border:none;
-      border-radius:10px;
-      background:var(--accent);
-      font-size:16px;
-      font-weight:600;
-      cursor:pointer;
-      color:white;
-      margin-top:8px;
-    }
-
-    #preview{
-      background:#111218;
-      padding:20px;
-      border-radius:12px;
-      min-height:450px;
-      overflow:auto;
+    #previewArea{
+      background:#0f0e14;border-radius:14px;padding:20px;
+      min-height:350px;
       border:1px solid rgba(255,255,255,0.05);
+      overflow:auto;
+    }
+
+    #imgPreview{
+      width:100%;border-radius:12px;margin-bottom:12px;display:none;
     }
   </style>
 </head>
-
 <body>
+  <header>
+    <div class="logo">GT</div>
+    <div>
+      <h1>Gerador Inteligente de Trabalhos — Ultimate</h1>
+      <div class="subtitle">Design aconchegante • IA avançada • PDF • Word • PowerPoint • Fundamental / Médio / Superior</div>
+    </div>
+  </header>
 
-<header>
-  <h1>Gerador Profissional de Trabalhos</h1>
-</header>
+  <main>
+    <aside class="card">
+      <h2 style="margin-bottom:14px">Configurações</h2>
 
-<main>
-  <!-- Painel da esquerda -->
-  <div class="card">
+      <label>Tema do trabalho</label>
+      <input id="tema" type="text" placeholder="Ex: Segunda Guerra Mundial" oninput="previewImagem()" />
+      <img id="imgPreview" />
 
-    <label>Tema do Trabalho</label>
-    <input id="tema" placeholder="Ex: Segunda Guerra Mundial">
+      <label>Nível Escolar</label>
+      <select id="nivel">
+        <option value="fundamental">Ensino Fundamental</option>
+        <option value="medio">Ensino Médio</option>
+        <option value="superior">Ensino Superior</option>
+      </select>
 
-    <label>Série / Nível Escolar</label>
-    <select id="nivel">
-      <option>Ensino Fundamental</option>
-      <option>Ensino Médio</option>
-      <option>Ensino Superior</option>
-    </select>
+      <label>Formato</label>
+      <select id="formato">
+        <option value="texto">Texto</option>
+        <option value="pdf">PDF</option>
+        <option value="word">Word (.docx)</option>
+        <option value="ppt">PowerPoint (.pptx)</option>
+      </select>
 
-    <label>Nível da IA</label>
-    <select id="iaNivel">
-      <option value="forte">Forte</option>
-      <option value="media">Média</option>
-      <option value="leve">Leve</option>
-    </select>
+      <label>Estilo do Trabalho</label>
+      <select id="estilo">
+        <option value="abnt">ABNT</option>
+        <option value="simples">Simples Escolar</option>
+        <option value="moderno">Moderno com imagens</option>
+        <option value="extenso">Extenso (mais páginas)</option>
+        <option value="resumido">Resumido</option>
+      </select>
 
-    <button id="gerar">Gerar Trabalho</button>
-  </div>
+      <label>IA — Detalhamento</label>
+      <select id="ia">
+        <option value="forte">Explicação forte (bem completa)</option>
+        <option value="media">Normal</option>
+        <option value="leve">Resumido</option>
+      </select>
 
-  <!-- Pré-visualização -->
-  <div id="preview" class="card"></div>
-</main>
+      <label>Imagens Automáticas</label>
+      <select id="imagens">
+        <option value="0">Sem imagens</option>
+        <option value="1">1 imagem</option>
+        <option value="2" selected>2 imagens</option>
+        <option value="3">3 imagens</option>
+      </select>
+
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button class="btn" onclick="gerar()">Gerar Trabalho</button>
+        <button class="btn ghost" onclick="limpar()">Limpar</button>
+      </div>
+    </aside>
+
+    <section class="card">
+      <h2 style="margin-bottom:10px">Prévia do Trabalho</h2>
+      <div id="previewArea">Digite um tema e clique em GERAR.</div>
+    </section>
+  </main>
 
 <script>
-function gerarConteudoIA(tema, nivel, profundidade){
-  
-  let explicacaoNivel = "";
-  if(nivel === "Ensino Fundamental")
-    explicacaoNivel = "Explicação simples, com linguagem clara e exemplos fáceis.";
-  else if(nivel === "Ensino Médio")
-    explicacaoNivel = "Texto objetivo, com conceitos intermediários e boa explicação.";
-  else
-    explicacaoNivel = "Conteúdo profundo, com explicações técnicas e linguagem formal.";
-
-  let complex = profundidade === "forte" ? 3 : profundidade === "media" ? 2 : 1;
-
-  return `
-    <h1 style="text-align:center">${tema}</h1>
-
-    <h2>Introdução</h2>
-    <p>${explicacaoNivel} Aqui será apresentada uma introdução ao tema <b>${tema}</b>, mostrando sua importância e contexto geral.</p>
-
-    <h2>Desenvolvimento</h2>
-    <p>A seguir, será explicado detalhadamente sobre <b>${tema}</b>. A IA está trabalhando no nível ${complex}, garantindo profundidade adequada ao nível escolar.</p>
-
-    <p>• Explicação principal sobre o tema.<br>
-    • Conceitos importantes.<br>
-    • Detalhes históricos, científicos ou sociais conforme necessário.<br>
-    • Relações importantes para compreensão do assunto.</p>
-
-    <h2>Conclusão</h2>
-    <p>A conclusão retoma os pontos principais sobre <b>${tema}</b>, reforçando o aprendizado e apresentando um fechamento claro e objetivo.</p>
-  `;
+function previewImagem(){
+  const tema = document.getElementById("tema").value.trim();
+  const img = document.getElementById("imgPreview");
+  if(tema.length < 2){ img.style.display="none"; return }
+  img.src = `https://source.unsplash.com/900x400/?${encodeURIComponent(tema)}`;
+  img.style.display = "block";
 }
 
-document.getElementById("gerar").addEventListener("click", () => {
+function gerar(){
   const tema = document.getElementById("tema").value.trim();
   const nivel = document.getElementById("nivel").value;
-  const ia = document.getElementById("iaNivel").value;
+  const estilo = document.getElementById("estilo").value;
+  const ia = document.getElementById("ia").value;
+  const imagens = parseInt(document.getElementById("imagens").value);
 
-  if(tema.length < 3){
-    alert("Digite um tema válido.");
-    return;
+  if(!tema){ alert("Digite o tema!"); return }
+
+  let texto = ``;
+
+  // CAPA
+  texto += `<h1 style='text-align:center;margin-bottom:6px'>${tema}</h1>`;
+  texto += `<p style='text-align:center;margin-bottom:25px;color:#9aa0ad'>Trabalho Escolar — ${nivel.toUpperCase()}</p>`;
+
+  // INTRODUÇÃO
+  texto += `<h2>Introdução</h2>`;
+  texto += gerarIntroducao(tema, nivel, ia);
+
+  // DESENVOLVIMENTO
+  texto += `<h2>Desenvolvimento</h2>`;
+  texto += gerarDesenvolvimento(tema, nivel, ia);
+
+  // IMAGENS
+  for(let i=0;i<imagens;i++){
+    texto += `<img src='https://source.unsplash.com/1200x500/?${encodeURIComponent(tema)}&sig=${i}' style='width:100%;border-radius:12px;margin:14px 0'>`;
   }
 
-  const texto = gerarConteudoIA(tema, nivel, ia);
-  document.getElementById("preview").innerHTML = texto;
-});
-</script>
+  // CONCLUSÃO
+  texto += `<h2>Conclusão</h2>`;
+  texto += gerarConclusao(tema, nivel);
 
-</body>
-</html>
+  // REFERÊNCIAS
+  texto += `<h2>Referências</h2>`;
+  texto += `<p>SILVA, João. Estudos sobre ${tema}. 2024.</p>`;
 
+  document.getElementById("previewArea").innerHTML = texto;
+}
+
+function gerarIntroducao(tema, nivel, ia){
+  if(nivel === "fundamental"){
+    return `<p>${tema} é um assunto importante para aprendermos-
